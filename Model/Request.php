@@ -82,13 +82,17 @@ class Request extends Database
                 c.request_code AS requestCode,
                 t.username AS staff,
                 COUNT(c.prod_id) AS total_quan,
-                c.request_type
+                c.request_type,
+                c.created_at
             FROM 
                 request_product c 
             INNER JOIN 
                 user_account t ON c.employee_id = t.user_id 
             GROUP BY 
-                c.request_code, t.username";
+                c.request_code, t.username
+            ORDER BY 
+                 c.created_at DESC
+                ";
         $stmt = $this->getConnect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -215,6 +219,15 @@ public function updateToZero()
         $stmt->bindParam(":request_code", $this->request_code);
         $stmt->execute();
         $result = $stmt->rowCount();
+        return $result;
+    }
+
+    public function getAllPendings()
+    {
+        $sql = "SELECT COUNT(*) AS total_count FROM request_product where request_type = 'Pending'";
+        $stmt = $this->getConnect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 }

@@ -30,7 +30,7 @@ $amount = $trans->getCalculation();
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
 
-    <title>tinongBakery</title>
+    <title>Inventory Management System</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -90,7 +90,7 @@ $amount = $trans->getCalculation();
                                     Transaction # <?php echo $trans_code ?>
                                 </h6>
                                 <h6 class="font-weight-bold">
-                                    Encoder: <?php echo $username ?>
+                                    Staff: <?php echo $username ?>
                                 </h6>
                                 <h6>
 
@@ -115,8 +115,8 @@ $amount = $trans->getCalculation();
                                 <tr>
                                     <td><?php echo $prod_name ?></td>
                                     <td> <?php echo $sub_quantity ?></td>
-                                    <td><?php echo $prod_price ?></td>
-                                    <td><?php echo $sub_price ?></td>
+                                    <td>₱ <?php echo $prod_price ?></td>
+                                    <td>₱ <?php echo $sub_price ?></td>
                                 </tr>
 
                             <?php
@@ -133,7 +133,7 @@ $amount = $trans->getCalculation();
 
 
                                 <h4>
-                                    Cash Amount: <b class="text text-danger"><?php echo $payment ?></b>
+                                    Cash Amount: <b class="text text-danger">₱ <?php echo $payment ?></b>
                                 </h4>
                                 <table width="100%">
                                     <tr>

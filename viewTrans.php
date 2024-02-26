@@ -32,7 +32,7 @@ $amount = $trans->getCalculation();
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
 
-    <title>tinongBakery</title>
+    <title>Inventory Management System</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -44,7 +44,7 @@ $amount = $trans->getCalculation();
 
 
 
-    <div class=" mw-100 d-flex justify-content-end p-2" style="border-bottom:2px solid gray; box-shadow:0px 0px 3px 0px;">
+    <div class=" mw-100 d-flex justify-content-end p-2" style=" box-shadow:0px 0px 3px 0px;">
 
 
     </div>
@@ -66,7 +66,7 @@ $amount = $trans->getCalculation();
                         <div class="form-group row text-left mb-0">
                             <div class="col-sm-9">
                                 <h5 class="font-weight-bold">
-                                    <h1 class="text text-start text-secondary" style="font-family: 'Playfair Display', serif;">Transaction</h1>
+                                    <h1 class="text text-start text-secondary" style="font-family: 'Playfair Display', serif;">Order Transaction History</h1>
                                 </h5>
                             </div>
 
@@ -80,7 +80,7 @@ $amount = $trans->getCalculation();
                         <div class="form-group row text-left mb-0 py-2">
                             <div class="col-sm-4 py-1">
                                 <h6 class="font-weight-bold">
-                                    Customer: <?php echo $cus_fname ?>
+                                    Supplier: <?php echo $cus_fname ?>
                                 </h6>
                                 <h6>
                                     Phone: <?php echo $cus_phone ?>
@@ -92,7 +92,7 @@ $amount = $trans->getCalculation();
                                     Transaction # <?php echo $trans_code ?>
                                 </h6>
                                 <h6 class="font-weight-bold">
-                                    Encoder:
+                                    Staff: <?php echo $username ?>
                                 </h6>
                                 <h6>
 
@@ -115,10 +115,10 @@ $amount = $trans->getCalculation();
                         <tbody>
                             <?php foreach ($result as $val) : extract($val) ?>
                                 <tr>
-                                    <td><?php echo $prod_name ?></td>
+                                    <td style="color:#c0392b; font-weight:bold;"><?php echo $prod_name ?></td>
                                     <td> <?php echo $sub_quantity ?></td>
-                                    <td><?php echo $prod_price ?></td>
-                                    <td><?php echo $sub_price ?></td>
+                                    <td>₱ <?php echo $prod_price ?></td>
+                                    <td>₱ <?php echo $sub_price ?></td>
                                 </tr>
 
                             <?php
@@ -135,12 +135,12 @@ $amount = $trans->getCalculation();
 
 
                                 <h4>
-                                    Cash Amount: <b class="text text-danger"><?php echo $transac_payment ?></b>
+                                    Cash Amount: <b class="text text-danger">₱ <?php echo $payment ?></b>
                                 </h4>
                                 <table width="100%">
                                     <tr>
                                         <td class="font-weight-bold">Total: </td>
-                                        <td class="font-weight-bold text-right text-primary">₱ <?php echo $transac_total ?></td>
+                                        <td class="font-weight-bold text-right text-primary">₱ <?php echo $total_price ?></td>
                                     </tr>
 
                                     <tr>

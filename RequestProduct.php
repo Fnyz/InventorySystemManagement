@@ -22,7 +22,8 @@ if (isset($_SESSION['adminId'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
 
-    <title>tinongBakery</title>
+    <title>Inventory Management System</title>
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -36,7 +37,10 @@ if (isset($_SESSION['adminId'])) {
 
     <div class=" mw-100 d-flex justify-content-end p-2" style="border-bottom:2px solid gray; box-shadow:0px 0px 3px 0px;">
 
-        <button class="btn shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-burger fs-2 text-secondary active"></i></i></button>
+        <button class="btn shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+
+        <i class="fa-solid fa-bars fs-2">
+        </i></button>
     </div>
 
     <div class="m-3 p-3 rounded" style="border:1px solid gray; height:100%;">
@@ -145,8 +149,7 @@ if (isset($_SESSION['adminId'])) {
 
                                         <th>Product Name</th>
                                         <th>Total Quantity</th>
-                                        <th>Total Price</th>
-                                        <th></th>
+                                        <th>Action</th>
 
                                     </tr>
                                 </thead>
@@ -212,7 +215,7 @@ if (isset($_SESSION['adminId'])) {
 
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header ">
-            <h5 class="offcanvas-title text text-center text-secondary" id="offcanvasWithBothOptionsLabel"><i class="fa-solid fa-bread-slice me-2"></i>TINONG's BAKERYSHOP</h5>
+            <h5 class="offcanvas-title text text-center text-secondary" id="offcanvasWithBothOptionsLabel"></i>INVENTORY MANAGEMENT SYSTEM</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -230,15 +233,8 @@ if (isset($_SESSION['adminId'])) {
                     <?php include_once "./dropModal.php"; ?>
                 </div>
             </div>
-            <ul class="list-group">
-                <li class="list-group-item "><a href="Dashboard.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-house-user me-2"></i>Home</a></li>
-                <li class="list-group-item"><a href="Accounts.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-key me-2"></i> Registered Accounts</a></li>
-                <li class="list-group-item"><a href="Customer.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-users me-2"></i>Customer</a></li>
-                <li class="list-group-item"><a href="Product.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-cart-shopping me-2"></i>Product</a></li>
-                <li class="list-group-item active"><a href="Sales.php" class="text text-white text-decoration-none"><i class="fa-brands fa-gg-circle me-2"></i>Sales</a></li>
-                <li class="list-group-item "><a href="Transaction.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-money-bill-1-wave me-2"></i></i>Transactions</a></li>
-                <li class="list-group-item "><a href="login.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-right-from-bracket me-2"></i></i>Log-Out</a></li>
-            </ul>
+            <?php $path = "RequestProduct" ?>
+            <?php include "./links.php"; ?>
         </div>
     </div>
 
@@ -517,7 +513,7 @@ function generateFormDataHTML(formData) {
 
     var html = `
     <tr style="width: 100%;">
-        <td>${prod_name}</td>
+        <td style="color:#c0392b; font-weight:bold;">${prod_name}</td>
         <td>${quantity}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -671,7 +667,7 @@ function generateFormDataHTML(formData) {
                 success: function(response) {
                     setTimeout(function() {
 
-                        alert('Requested product is successfully save!');
+                        alert('Product request is save successfully!');
 
                     }, 1);
 

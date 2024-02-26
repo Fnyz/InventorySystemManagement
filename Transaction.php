@@ -7,6 +7,8 @@ $res = $trans->showTranss();
 
 
 
+
+
 ?>
 
 
@@ -61,7 +63,7 @@ $res = $trans->showTranss();
                     <th>Transac #</th>
                     <th>Supplier</th>
                     <th>No. of items</th>
-
+                    <th>Date</th>
                     <th>Action</th>
 
                 </tr>
@@ -70,15 +72,16 @@ $res = $trans->showTranss();
                 <?php foreach ($res as $val) : extract($val) ?>
                     <tr>
 
-                        <td><?php echo $transac_code ?></td>
+                        <td><?php echo $trans_code ?></td>
                         <td><?php echo $cus_fname ?></td>
                         <td><?php echo $total_quan ?></td>
+                        <td><?php echo $created_date ?></td>
                         <td>
 
                             <form action="viewTrans.php" method="GET">
 
 
-                                <input type="hidden" value="<?php echo $transac_code ?>" name="code">
+                                <input type="hidden" value="<?php echo $trans_code ?>" name="code">
                                 <button type="submit" class="btn btn-danger" onclick=""><i class="fa-solid fa-list"></i></button>
 
 
@@ -123,15 +126,8 @@ $res = $trans->showTranss();
                         <?php include_once "./dropModal.php"; ?>
                     </div>
                 </div>
-                <ul class="list-group">
-                    <li class="list-group-item "><a href="Dashboard.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-house-user me-2"></i>Home</a></li>
-                    <li class="list-group-item"><a href="Accounts.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-key me-2"></i> Registered Accounts</a></li>
-                    <li class="list-group-item"><a href="Supplier.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-users me-2"></i>Supplier</a></li>
-                    <li class="list-group-item "><a href="Product.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-cart-shopping me-2"></i>Product</a></li>
-                    <li class="list-group-item"><a href="Transactions.php" class="text text-secondary text-decoration-none"><i class="fa-brands fa-gg-circle me-2"></i>Transactions</a></li>
-                    <li class="list-group-item active"><a href="Transaction.php" class="text text-white text-decoration-none "><i class="fa-solid fa-money-bill-1-wave me-2"></i></i>History</a></li>
-                    <li class="list-group-item "><a href="login.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-right-from-bracket me-2"></i></i>Log-Out</a></li>
-                </ul>
+                <?php $path = "Transaction" ?>
+               <?php include "./links.php"; ?>
             </div>
         </div>
 

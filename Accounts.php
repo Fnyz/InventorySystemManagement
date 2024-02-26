@@ -142,15 +142,8 @@ $acc = $user->showUser();
                     <?php include_once "./dropModal.php"; ?>
                 </div>
             </div>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="Dashboard.php" class="text text-decoration-none text-secondary"><i class="fa-solid fa-house-user me-2"></i>Home</a></li>
-                <li class="list-group-item active "><a href="Accounts.php" class="text text-secondary text-decoration-none text-white"><i class="fa-solid fa-key me-2"></i> Registered Accounts</a></li>
-                <li class="list-group-item"><a href="Supplier.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-users me-2"></i>Supplier</a></li>
-                <li class="list-group-item"><a href="Product.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-cart-shopping me-2"></i>Product</a></li>
-                <li class="list-group-item"><a href="Transactions.php" class="text text-secondary text-decoration-none"><i class="fa-brands fa-gg-circle me-2"></i>Transactions</a></li>
-                <li class="list-group-item "><a href="Transaction.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-money-bill-1-wave me-2"></i></i>History</a></li>
-                <li class="list-group-item "><a href="login.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-right-from-bracket me-2"></i></i>Log-Out</a></li>
-            </ul>
+            <?php $path = "Accounts" ?>
+            <?php include "./links.php"; ?>
         </div>
     </div>
 

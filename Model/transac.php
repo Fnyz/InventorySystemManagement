@@ -45,17 +45,42 @@ class transac extends Database
     public function showTransaction()
     {
         $sql = "
-        select s.username, p.prod_name, t.sub_quantity, p.prod_price, t.sub_price, c.cus_fname, c.cus_phone, t.trans_code,
-t.created_date from trans_history t inner join product p on t.prod_id = p.prod_id join supplier
-c on t.cus_id = c.cus_id join user_account s on t.user_id = s.user_id where t.trans_code = :trans_code
-        
+            SELECT 
+                s.username, 
+                p.prod_name, 
+                t.sub_quantity, 
+                p.prod_price, 
+                t.sub_price, 
+                c.cus_fname, 
+                c.cus_phone, 
+                t.trans_code,
+                t.created_date 
+            FROM 
+                trans_history t 
+            INNER JOIN 
+                product p 
+            ON 
+                t.prod_id = p.prod_id 
+            JOIN 
+                supplier c 
+            ON 
+                t.cus_id = c.cus_id 
+            JOIN 
+                user_account s 
+            ON 
+                t.user_id = s.user_id 
+            WHERE 
+                t.trans_code = :trans_code;
         ";
+    
         $stmt = $this->getConnect()->prepare($sql);
         $stmt->bindParam(":trans_code", $this->code);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
         return $result;
     }
+    
 
     public function getCode()
     {
@@ -85,16 +110,28 @@ from trans_history t where t.trans_code = :trans_code
     public function showTranss()
     {
         $sql = "
-        
-select t.transac_code, c.cus_fname, sum(t.transac_quan)as total_quan, t.transac_created_at from transactions t inner join supplier
-c on t.cus_id = c.cus_id group by t.transac_code;
-        
+            SELECT 
+                t.trans_code, 
+                c.cus_fname, 
+                count(t.prod_id) AS total_quan, 
+                t.created_date 
+            FROM 
+                trans_history t 
+            INNER JOIN 
+                supplier c 
+            ON 
+                t.cus_id = c.cus_id 
+            GROUP BY 
+                t.trans_code;
         ";
+    
         $stmt = $this->getConnect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
         return $result;
     }
+    
 
     public function sales()
     {
@@ -116,7 +153,7 @@ c on t.cus_id = c.cus_id group by t.transac_code;
 
     public function getAllTotalTransactions()
     {
-        $sql = "SELECT COUNT(*) AS total_count FROM transactions";
+        $sql = "SELECT COUNT(*) AS total_count FROM trans_history";
         $stmt = $this->getConnect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

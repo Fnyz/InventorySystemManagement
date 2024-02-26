@@ -116,24 +116,25 @@ if (isset($_SESSION['adminId'])) {
                                     <tr>
                                         <td>
                                         <select id="prod_id" class="form-control text-center" style="width: 200px;" name="prod_id" onchange="getQuantity()">
-                                            <option value="0" selected>-- Choose here --</option>
-                                            <?php
-                                            $prod = $conn->query("SELECT a.*, p.prod_name, a.quantity
+                                        <option value="0" selected>-- Choose here --</option>
+                                        <?php
+                                        $prod = $conn->query("SELECT a.*, p.prod_name, p.prod_price, a.quantity
                                                                 FROM request_product a 
-                                                                INNER JOIN product p ON a.prod_id = p.prod_id where request_type = 'Pending'");
-                                            while ($row = $prod->fetch_assoc()) :
-                                            ?>
-                                                <option value="<?php echo $row['prod_id'] ?>" data-quantity="<?php echo $row['quantity'] ?>"> 
-                                                    <?php echo $row['prod_name'] ?>
-                                                </option>
-                                            <?php endwhile; ?>
-                                        </select>
+                                                                INNER JOIN product p ON a.prod_id = p.prod_id 
+                                                                WHERE request_type = 'Pending'");
+                                        while ($row = $prod->fetch_assoc()) :
+                                        ?>
+                                            <option value="<?php echo $row['prod_id'] ?>" data-quantity="<?php echo $row['quantity'] ?>" data-price="<?php echo $row['prod_price'] ?>"> 
+                                                <?php echo $row['prod_name'] ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    </select>
 
                                         </td>
 
                                         <td><input type="text" class="form-control"  id="price" onkeyup="mykey(this.value)" name ="price"></td>
-                                        <td><input type="text" class="form-control"  id="onhand" name="onhand" onkeyup="mykey(this.value)"></td>
-                                        <td><input type="text" class="form-control"  id="total_price" name="total_price"></td>
+                                        <td><input type="text" class="form-control"  id="onhand" name="onhand" onkeyup="mykey(this.value)"  ></td>
+                                        <td><input type="text" class="form-control"  id="total_price" name="total_price"  ></td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                                 <button type="button" class="btn btn-success" id="submit"><i class="fa-solid fa-plus"></i></button>
@@ -194,8 +195,8 @@ if (isset($_SESSION['adminId'])) {
                          
                             <form id="goToTransRe" action="transactionRecord.php?" >
                                 <input type="hidden" value="<?php echo $random_id ?>" name="code">
-                                <label>Input Payment Amount:
-                                <input type="text" class="form-control" placeholder="Input payment"  id="payment" style="margin-bottom:10px;@ display: none;">
+                                <label id="paylabel" style="margin-bottom:5px; display: none; color:blue; font-weight:bold;">Input Payment Amount: </label>
+                                <input type="text" class="form-control" placeholder="Input payment here..."  id="payment" style="margin-bottom:20px; display: none; border: 1px solid gray;">
                                 <button type="submit" style="display: none;" class="btn btn-success" onclick="savePurchase()" id="savePur" >Save Purchase</button>
                             </form>
 
@@ -245,15 +246,8 @@ if (isset($_SESSION['adminId'])) {
                     <?php include_once "./dropModal.php"; ?>
                 </div>
             </div>
-            <ul class="list-group">
-                <li class="list-group-item "><a href="Dashboard.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-house-user me-2"></i>Home</a></li>
-                <li class="list-group-item"><a href="Accounts.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-key me-2"></i> Registered Accounts</a></li>
-                <li class="list-group-item"><a href="Supplier.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-users me-2"></i>Supplier</a></li>
-                <li class="list-group-item"><a href="Product.php" class="text text-secondary text-decoration-none"><i class="fa-solid fa-cart-shopping me-2"></i>Product</a></li>
-                <li class="list-group-item active"><a href="Sales.php" class="text text-white text-decoration-none"><i class="fa-brands fa-gg-circle me-2"></i>Transactions</a></li>
-                <li class="list-group-item "><a href="Transaction.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-money-bill-1-wave me-2"></i></i>History</a></li>
-                <li class="list-group-item "><a href="login.php" class="text text-secondary text-decoration-none "><i class="fa-solid fa-right-from-bracket me-2"></i></i>Log-Out</a></li>
-            </ul>
+            <?php $path = "Transactions" ?>
+            <?php include "./links.php"; ?>
         </div>
     </div>
 
@@ -465,46 +459,6 @@ $.ajax({
 })
 }
 
-        // $('#submit').on('click', function() {
-
-
-        //    var a = $('#userType').val();
-        //     var b = $('#total_price').val();
-        //     var c = $('#onhand').val();
-  
-
-
-          
-               
-        //         $.ajax({
-        //             type: 'post',
-        //             url: 'server.php',
-        //             data: $('#input_form').serialize(),
-        //             success: function(response) {
-                       
-        //                 getData();
-        //                 dataUpdatequan();
-                   
-
-        //                 $('#prod_id').val("0");
-        //                 $('#price').val("");
-        //                 $('#total_price').val("");
-        //                 $('#onhand').val("");
-
-        //                 res = JSON.parse(response);
-        //                 alert(res.error);
-
-
-
-        //             },
-        //             error: function() {
-        //                 alert('Error!');
-        //             }
-        //         })
-         
-
-
-        // })
 
 
         var productName;
@@ -515,10 +469,11 @@ $.ajax({
     var productId = selectedOption.value;
     var productName = selectedOption.text;
     var quantity = selectedOption.getAttribute('data-quantity');
-
-    $('#onhand').val(quantity);
-    $('#price').val("");
-    $('#total_price').val("");
+    var price = selectedOption.getAttribute('data-price');
+    var totalPrice = quantity * parseFloat(price);
+    $('#onhand').val(parseInt(quantity));
+    $('#price').val(!price ? 0.00 : parseFloat(price).toFixed(2)); // Set the price in the price input field
+    $('#total_price').val(!totalPrice ? 0.00 : totalPrice.toFixed(2)); // Clear the total price field
 }
 
 
@@ -527,6 +482,14 @@ var totalPrices;
 
 $('#submit').on('click', function(event) {
     event.preventDefault();
+
+    const pr = $('#price').val();
+   
+
+    if(parseInt(pr) === 0 ) {
+        alert("Please provide price of the product!")
+        return;
+    }
     
     // Serialize the form data
     var formData = $('#input_form').serialize();
@@ -552,6 +515,8 @@ $('#submit').on('click', function(event) {
         displayFormData(formDataArray);
         $('#savePur').show();
         $('#payment').show();
+        $('#paylabel').show();
+        
         console.log($('#input_form').serialize());
     }
 });
@@ -592,7 +557,8 @@ function displayFormData(formDataArray) {
     });
 
      // Append total price to the container
-     container.append('<p>Total Price: $' + totalPrice.toFixed(2) + '</p>');
+     container.append('<p style="margin-top:10px; margin-left:10px;">Total Price: <span style="color: red; font-weight: bold;">$' + totalPrice.toFixed(2) + '</span></p>');
+
     totalPrices = totalPrice.toFixed(2);
 }
 
@@ -615,7 +581,7 @@ function generateFormDataHTML(formData) {
 
     var html = `
     <tr style="width: 100%;">
-        <td>${prod_name}</td>
+        <td style= "color:#c0392b; font-weight:bold; text-decoration:uppercase;">${prod_name}</td>
         <td>${quantity}</td>
         <td>${price}</td>
         <td>

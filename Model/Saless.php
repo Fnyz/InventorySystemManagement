@@ -95,22 +95,38 @@ class Saless extends Database
     }
 
 
-
-public function updateProduct()
-{
-    $sql = "UPDATE product SET prod_quan = :prod_quan, prod_price = :prod_price WHERE prod_id = :prod_id";
-    $stmt = $this->getConnect()->prepare($sql);
-    $stmt->bindParam(":prod_quan", $this->total_quan);
-    $stmt->bindParam(":prod_price", $this->prices);
-    $stmt->bindParam(":prod_id", $this->prod_id);
+    public function updateProduct()
+    {
+        // Get the current product quantity
+        $currentQuantity = $this->getCurrentProductQuantity();
     
-    if ($stmt->execute()) {
-        return true;
-    } else {
-        return false;  // Add this line to handle the case where the execution fails
+        // Calculate the new total quantity
+        $newTotalQuantity = $currentQuantity + $this->total_quan;
+    
+        // Update the product with the new total quantity
+        $sql = "UPDATE product SET prod_quan = :prod_quan WHERE prod_id = :prod_id";
+        $stmt = $this->getConnect()->prepare($sql);
+        $stmt->bindParam(":prod_quan", $newTotalQuantity);
+        $stmt->bindParam(":prod_id", $this->prod_id);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
-}
-
+    
+    // Function to get the current product quantity
+    private function getCurrentProductQuantity()
+    {
+        $sql = "SELECT prod_quan FROM product WHERE prod_id = :prod_id";
+        $stmt = $this->getConnect()->prepare($sql);
+        $stmt->bindParam(":prod_id", $this->prod_id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['prod_quan'];
+    }
+    
 public function updateType()
 {
     $sql = "UPDATE request_product SET request_type = :request_type WHERE prod_id = :prod_id";
