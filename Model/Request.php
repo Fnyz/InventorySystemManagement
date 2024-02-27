@@ -91,13 +91,14 @@ class Request extends Database
             GROUP BY 
                 c.request_code, t.username
             ORDER BY 
-                 c.created_at DESC
-                ";
+                c.request_code DESC
+        ";
         $stmt = $this->getConnect()->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    
     
 
     public function showTrans()

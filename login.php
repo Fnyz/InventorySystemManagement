@@ -128,8 +128,8 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                                     <?php if (!$hideAdminOption): ?>
         <option value="Admin">Admin</option>
     <?php endif; ?>
-                                    <option value="Emoloyee"> Employee</option>
-                                    <option value="Emoloyee"> Staff</option>
+                                    <option value="Employee"> Employee</option>
+                                    <option value="Staff"> Staff</option>
                          </select>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" name="user">

@@ -104,8 +104,10 @@ class Saless extends Database
         $newTotalQuantity = $currentQuantity + $this->total_quan;
     
         // Update the product with the new total quantity
-        $sql = "UPDATE product SET prod_quan = :prod_quan WHERE prod_id = :prod_id";
+        $sql = "UPDATE product SET prod_quan = :prod_quan, prod_price = :prod_price WHERE prod_id = :prod_id";
         $stmt = $this->getConnect()->prepare($sql);
+        // Bind parameters
+        $stmt->bindParam(":prod_price", $this->prices); // Assuming $this->prod_price holds the new price
         $stmt->bindParam(":prod_quan", $newTotalQuantity);
         $stmt->bindParam(":prod_id", $this->prod_id);
     

@@ -5,7 +5,9 @@ require_once "./Model/Request.php";
 $trans = new Request();
 $res = $trans->showHistoryRecord();
 
-
+usort($res, function($a, $b) {
+    return strtotime($b['requestCode']) - strtotime($a['requestCode']);
+});
 
 ?>
 
@@ -32,7 +34,7 @@ $res = $trans->showHistoryRecord();
 
 <body>
 
-
+  
 
     <div class=" mw-100 d-flex justify-content-end p-2" style="border-bottom:2px solid gray; box-shadow:0px 0px 3px 0px;">
         <?php
@@ -67,6 +69,7 @@ $res = $trans->showHistoryRecord();
                 </tr>
             </thead>
             <tbody>
+
                 <?php foreach ($res as $val) : extract($val) ?>
                     <tr>
 

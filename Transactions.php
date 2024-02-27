@@ -683,7 +683,8 @@ function generateFormDataHTML(formData) {
         function savePurchase() {
 
            const pay = $('#payment').val();
-            console.log(pay, totalPrices)
+            console.log(formDataArray);
+            
            if(parseFloat(pay) < totalPrices){
             alert("Payment amount should not be below the total price.")
             return;
